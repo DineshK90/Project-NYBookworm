@@ -16,8 +16,8 @@ class Navbar extends Component {
         </div>
         <nav className="nav nav-tabs nav-justified">
           <a className="nav-link" onClick={()=>this.props.toHome()}>Home</a>
-          <a className="nav-link" onClick={()=>this.props.toBestsellers()}>NY Bestseller</a>
-          <a className="nav-link" onClick={()=>this.props.toBooklist()}>Booklist</a>
+          <a className="nav-link" onClick={()=>this.props.toBestsellers()}>Search for NY Bestsellers</a>
+          <a className="nav-link" onClick={()=>this.props.toBooklist()}>Personal Booklist</a>
         </nav>
       </header>
     )
