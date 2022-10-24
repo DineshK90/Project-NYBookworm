@@ -18,3 +18,7 @@ header {
   cursor: pointer;
   background-color: #815B5B
 }
+
+.user-card {
+  width: 25rem;
+}

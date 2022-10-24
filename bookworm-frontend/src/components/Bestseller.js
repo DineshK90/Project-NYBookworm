@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 class Bestseller extends Component {
   render(){
     return (
-      <nav>
+      <div>
         <h1>This is the Bestseller</h1>
-      </nav>
+      </div>
     )
   }
 }
