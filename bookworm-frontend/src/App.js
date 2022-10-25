@@ -20,12 +20,23 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+
+      //--- Nav
       navHome: true,
       navLogIn: false,
       navRegister: false,  
       navBestsellers: false,
       navBooklist: false,
+
+      baseURL: 'https://api.nytimes.com/svc/books/v3/',
+      apiKey: 'apikey=cd6aff23',
+      query: '&t=',
+      movieTitle: '',
+      searchURL: '',
+      movie: ''
     }
+
+
     this.toHome = this.toHome.bind(this)
     this.toLogIn = this.toLogIn.bind(this);
     this.toRegister = this.toRegister.bind(this);
@@ -87,6 +98,20 @@ toHome(){
     })
   }
 
+  /*------------------
+    USER FUNCTION
+  ------------------*/
+
+  handleRegister(e){
+    e.preventDefault();
+    console.log(`Registered`)
+  }
+
+  handleLogIn(e){
+    e.preventDefault();
+    console.log(`Logged In`)
+  } 
+  
 /*------------------
   RENDERING
 ------------------*/
