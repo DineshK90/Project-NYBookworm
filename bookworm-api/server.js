@@ -5,7 +5,7 @@ const app = express();
 const PORT = 3003;
 
 const MONGODB_URI =
-  "mongodb+srv://admin:admin@cluster0.7lqlv8z.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://admin:admin@cluster0.7lqlv8z.mongodb.net/bookworm";
 
 const whitelist = ["http://localhost:3000", "http://localhost:3003"];
 
