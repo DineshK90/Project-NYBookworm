@@ -13,3 +13,40 @@ bookmark.get("/", (req, res) => {
     }
   });
 });
+
+bookmark.post("/", (req, res) => {
+  Bookmark.create(req.body, (err, newBookmark) => {
+    if (err) {
+      res.status(400).json({ err: err.message });
+    } else {
+      res.send(newBookmark);
+    }
+  });
+});
+
+bookmark.delete("/:id", (req, res) => {
+  Bookmark.findByIdAndDelete(req.params.id, (err, deletedBookmark) => {
+    if (err) {
+      res.status(400).json({ err: err.message });
+    } else {
+      res.status(200).json(deletedBookmark);
+    }
+  });
+});
+
+bookmark.put("/:id", (req, res) => {
+  Bookmark.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true },
+    (err, updatedBookmark) => {
+      if (err) {
+        res.status(400).json({ err: err.message });
+      } else {
+        res.status(200).json(updatedBookmark);
+      }
+    }
+  );
+});
+
+module.exports = bookmark;
