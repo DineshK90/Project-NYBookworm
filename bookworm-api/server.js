@@ -34,5 +34,5 @@ app.use(cors(corsOption));
 app.use("/", bookmarkController);
 
 app.listen(PORT, () => {
-  console.log(`Holidays app is listening on port ` + PORT);
+  console.log("Holidays app is listening on port " + PORT);
 });
