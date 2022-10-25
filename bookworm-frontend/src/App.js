@@ -28,12 +28,11 @@ class App extends Component {
       navBestsellers: false,
       navBooklist: false,
 
-      baseURL: 'https://api.nytimes.com/svc/books/v3/',
-      apiKey: 'apikey=cd6aff23',
-      query: '&t=',
-      movieTitle: '',
-      searchURL: '',
-      movie: ''
+      //--- NY Times API
+      baseURL: 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?',
+      apiKey: 'api-key=Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
+      listingURL: '',
+      bestsellerList: ''
     }
 
 
@@ -48,15 +47,15 @@ class App extends Component {
   NAV FUNCTION
 ------------------*/
 
-toHome(){
-  this.setState({
-    navHome: true,
-    navLogIn: false,
-    navRegister: false,  
-    navBestsellers: false,
-    navBooklist: false,
-  })
-}
+  toHome(){
+    this.setState({
+      navHome: true,
+      navLogIn: false,
+      navRegister: false,  
+      navBestsellers: false,
+      navBooklist: false,
+    })
+  }
 
   toLogIn(){
     this.setState({
@@ -85,6 +84,13 @@ toHome(){
       navRegister: false,  
       navBestsellers: true,
       navBooklist: false,
+      listingURL: this.state.baseURL + this.state.apiKey,
+    },()=>{
+      fetch(this.state.listingURL)
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => this.setState({ bestsellerList: json }))
     })
   }
 
@@ -129,7 +135,7 @@ toHome(){
         { this.state.navHome ? <Home /> : '' }
         { this.state.navLogIn ? <LogIn /> : '' }
         { this.state.navRegister ? <Register /> : '' }
-        { this.state.navBestsellers ? <Bestseller /> : '' }
+        { this.state.navBestsellers ? <Bestseller bestsellerList={this.state.bestsellerList} /> : '' }
         { this.state.navBooklist ? <Booklist /> : '' }
       </div>
     );

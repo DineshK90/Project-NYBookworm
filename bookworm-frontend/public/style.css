@@ -22,3 +22,8 @@ header {
 .user-card {
   width: 25rem;
 }
+
+.book_image {
+  max-height: 177.5px;
+  max-width: 117.5px;
+}
