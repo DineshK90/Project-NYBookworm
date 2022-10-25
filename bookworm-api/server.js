@@ -33,7 +33,8 @@ mongoose.connection.on("disconnected", () => {
 app.use(express.json());
 app.use(cors(corsOption));
 app.use("/", bookmarkController);
+app.use("/users", require("./routes/userRoutes"));
 
 app.listen(PORT, () => {
-  console.log("Holidays app is listening on port " + PORT);
+  console.log("Bookworm app is listening on port " + PORT);
 });
