@@ -1,0 +1,24 @@
+body {
+  background-color: #FFF8EA;
+}
+
+header {
+  background-color: #9E7676;
+}
+
+.header-image {
+  max-width: 300px;
+}
+
+.nav-link {
+  color: #FFF8EA;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  background-color: #815B5B
+}
+
+.user-card {
+  width: 25rem;
+}
