@@ -300,8 +300,11 @@ class App extends Component {
       readingStatus: this.state.readingStatus,
       notes: this.state.notes,
     }
-    this.state.booksArray[this.state.index] = updatedBookData
+    // this.state.booksArray[this.state.index] = updatedBookData
+    let updatedBooksArray = this.state.booksArray;
+    updatedBooksArray.splice(this.state.index,1,updatedBookData)
     this.setState({
+      booksArray: updatedBooksArray,
       title: this.state.title,
       author: this.state.author,
       image: this.state.image,

@@ -26,7 +26,7 @@ class Bestseller extends Component {
           this.props.bestsellerList.results.books.map((book,index)=>{
               return (
                 <div key={index} className="col">
-                  <img className="book_image mt-3" src={book.book_image} onClick={()=>this.props.showBookDetails(book)} />
+                  <img className="book_image mt-3" src={book.book_image} alt={this.title} onClick={()=>this.props.showBookDetails(book)} />
                 </div>
               )
             })
@@ -36,7 +36,7 @@ class Bestseller extends Component {
         { !this.props.NYTitle ? '' :   
           <div className="my-5 text-center">
             <h1>Book Details</h1>
-            <img src={this.props.NYImage} />
+            <img src={this.props.NYImage} alt={this.props.NYTitle}/>
             <h3>{this.props.NYTitle}</h3>
             <h3>By {this.props.NYAuthor}</h3>
             <h3>Publisher: {this.props.NYPublisher}</h3>
