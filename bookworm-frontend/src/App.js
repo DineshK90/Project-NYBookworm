@@ -31,13 +31,26 @@ class App extends Component {
       navBestsellers: false,
       navBooklist: false,
 
+      //--- User Data
+      userList: [],
+      email:  '',
+      username: '',
+      password: '',      
+
       //--- NY Times API
       bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/',
       currentDate: 'current',
       date: '',
       apiKey: '/hardcover-fiction.json?api-key=Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
       listingURL: '',
-      bestsellerList: ''
+      bestsellerList: '',
+
+      //--- NYTimes Book API Data
+      bookImage: '',
+      bookTitle: '',
+      bookAuthor: '',
+      bookPublisher: '',
+      bookSummary: '',
     }
 
 
@@ -46,9 +59,13 @@ class App extends Component {
     this.toRegister = this.toRegister.bind(this);
     this.toBestsellers = this.toBestsellers.bind(this);
     this.toBooklist = this.toBooklist.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+    this.handleLogIn = this.handleLogIn.bind(this);
     this.getBestsellers = this.getBestsellers.bind(this);
     this.searchBook = this.searchBook.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.showBookDetails = this.showBookDetails.bind(this);
+    this.clearBookDetails = this.clearBookDetails.bind(this);
   }
   
   /*------------------
@@ -143,6 +160,26 @@ class App extends Component {
     })
   }
 
+  showBookDetails(obj){
+    this.setState({
+      bookImage: obj.book_image,
+      bookTitle: obj.title,
+      bookAuthor: obj.author,
+      bookPublisher: obj.publisher,
+      bookSummary: obj.description
+    })
+  }
+
+  clearBookDetails(){
+    this.setState({
+      bookImage: '',
+      bookTitle: '',
+      bookAuthor: '',
+      bookPublisher: '',
+      bookSummary: ''
+    })
+  }
+
   /*------------------
     USER FUNCTION
   ------------------*/
@@ -150,6 +187,14 @@ class App extends Component {
   handleRegister(e){
     e.preventDefault();
     console.log(`Registered`)
+    const userCredentials = {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+    }
+
+    this.state.userList.push(userCredentials);
+    console.log(this.state.userList)
   }
 
   handleLogIn(e){
@@ -174,14 +219,22 @@ class App extends Component {
           />
 
           { this.state.navHome ? <Home /> : '' }
-          { this.state.navLogIn ? <LogIn /> : '' }
-          { this.state.navRegister ? <Register /> : '' }
+          { this.state.navLogIn ? <LogIn handleChange={this.handleChange} handleLogIn={this.handleLogIn} /> : '' }
+          { this.state.navRegister ? <Register handleChange={this.handleChange} handleRegister={this.handleRegister} /> : '' }
+
           { this.state.navBestsellers ? <Bestseller
             getBestsellers={this.getBestsellers}
             searchBook={this.searchBook}
             handleChange={this.handleChange}
+            showBookDetails={this.showBookDetails}
+            clearBookDetails={this.clearBookDetails}
             bestsellerList={this.state.bestsellerList}
             date={this.state.date}
+            bookImage={this.state.bookImage}
+            bookTitle={this.state.bookTitle}
+            bookAuthor={this.state.bookAuthor}
+            bookPublisher={this.state.bookPublisher}
+            bookSummary={this.state.bookSummary}
           /> : '' }
           { this.state.navBooklist ? <Booklist /> : '' }
         </div>

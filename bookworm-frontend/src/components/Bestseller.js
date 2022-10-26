@@ -1,37 +1,6 @@
 import React, { Component } from 'react'
 
 class Bestseller extends Component {
-  constructor(){
-    super();
-    this.state={
-      bookImage: '',
-      bookTitle: '',
-      bookAuthor: '',
-      bookPublisher: '',
-      bookSummary: ''
-    }
-    this.showBookDetails = this.showBookDetails.bind(this);
-  }
-  
-  showBookDetails(obj){
-    this.setState({
-      bookImage: obj.book_image,
-      bookTitle: obj.title,
-      bookAuthor: obj.author,
-      bookPublisher: obj.publisher,
-      bookSummary: obj.description
-    })
-  }
-
-  clearBookDetails(){
-    this.setState({
-      bookImage: '',
-      bookTitle: '',
-      bookAuthor: '',
-      bookPublisher: '',
-      bookSummary: ''
-    })
-  }
 
   render(){
     return (
@@ -56,23 +25,23 @@ class Bestseller extends Component {
           { this.props.bestsellerList==='' ? '' : 
           this.props.bestsellerList.results.books.map((book,index)=>{
               return (
-                <div key={index} className="col mx-2">
-                  <img className="book_image mt-3" src={book.book_image} onClick={()=>this.showBookDetails(book)} />
+                <div key={index} className="col">
+                  <img className="book_image mt-3" src={book.book_image} onClick={()=>this.props.showBookDetails(book)} />
                 </div>
               )
             })
           }
         </div>
 
-        { !this.state.bookTitle ? '' :   
+        { !this.props.bookTitle ? '' :   
           <div className="my-5 text-center">
             <h1>Book Details</h1>
-            <img src={this.state.bookImage} />
-            <h3>{this.state.bookTitle}</h3>
-            <h3>By {this.state.bookAuthor}</h3>
-            <h3>Publisher: {this.state.bookPublisher}</h3>
+            <img src={this.props.bookImage} />
+            <h3>{this.props.bookTitle}</h3>
+            <h3>By {this.props.bookAuthor}</h3>
+            <h3>Publisher: {this.props.bookPublisher}</h3>
             <h3>Summary</h3>
-            <p>{this.state.bookSummary}</p>
+            <p>{this.props.bookSummary}</p>
             <p><button className="btn btn-primary mx-2">Add</button><button className="btn btn-primary mx-2" onClick={()=>this.clearBookDetails()}>Clear</button></p>
           </div>
         }
