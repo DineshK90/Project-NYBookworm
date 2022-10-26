@@ -4,7 +4,7 @@ const bookmark = express.Router();
 const Bookmark = require("../models/bookmarkSchema");
 const User = require("../models/users");
 
-const { protect } = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
 bookmark.get("/", (req, res) => {
   Bookmark.find({}, (err, myBookmark) => {
