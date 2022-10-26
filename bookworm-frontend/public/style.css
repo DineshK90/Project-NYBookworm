@@ -6,6 +6,10 @@ header {
   background-color: #9E7676;
 }
 
+.allButFooter {
+  min-height: calc(100vh - 40px);
+}
+
 .header-image {
   max-width: 300px;
 }
@@ -26,4 +30,10 @@ header {
 .book_image {
   max-height: 267px;
   max-width: 177px;
+  cursor: pointer;
+}
+
+footer {
+  background-color: #594545;
+  color: #FFF8EA;
 }

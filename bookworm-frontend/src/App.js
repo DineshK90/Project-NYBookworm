@@ -11,6 +11,7 @@ import LogIn from './components/LogIn';
 import Register from './components/Register';
 import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
+import Footer from './components/Footer';
 
 
 class App extends Component {
@@ -163,24 +164,29 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-        <Navbar
-          toHome={ this.toHome }
-          toLogIn={ this.toLogIn }
-          toRegister={ this.toRegister }
-          toBestsellers={ this.toBestsellers }
-          toBooklist={ this.toBooklist }
-        />
-        { this.state.navHome ? <Home /> : '' }
-        { this.state.navLogIn ? <LogIn /> : '' }
-        { this.state.navRegister ? <Register /> : '' }
-        { this.state.navBestsellers ? <Bestseller
-          getBestsellers={this.getBestsellers}
-          searchBook={this.searchBook}
-          handleChange={this.handleChange}
-          bestsellerList={this.state.bestsellerList}
-          date={this.state.date}
-        /> : '' }
-        { this.state.navBooklist ? <Booklist /> : '' }
+        <div className="allButFooter">
+          <Navbar
+            toHome={ this.toHome }
+            toLogIn={ this.toLogIn }
+            toRegister={ this.toRegister }
+            toBestsellers={ this.toBestsellers }
+            toBooklist={ this.toBooklist }
+          />
+
+          { this.state.navHome ? <Home /> : '' }
+          { this.state.navLogIn ? <LogIn /> : '' }
+          { this.state.navRegister ? <Register /> : '' }
+          { this.state.navBestsellers ? <Bestseller
+            getBestsellers={this.getBestsellers}
+            searchBook={this.searchBook}
+            handleChange={this.handleChange}
+            bestsellerList={this.state.bestsellerList}
+            date={this.state.date}
+          /> : '' }
+          { this.state.navBooklist ? <Booklist /> : '' }
+        </div>
+
+        <Footer />
       </div>
     );
   }
