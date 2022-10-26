@@ -13,10 +13,11 @@ const corsOption = {
   origin: whitelist,
 };
 
-const bookmarkController = require("./controllers/bookmark");
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
 });
+
+const bookmarkController = require("./controllers/bookmark.js");
 
 mongoose.connection.once("open", () => {
   console.log("Connected to Mongoose DB");
