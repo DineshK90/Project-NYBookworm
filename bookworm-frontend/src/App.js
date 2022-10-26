@@ -29,8 +29,10 @@ class App extends Component {
       navBooklist: false,
 
       //--- NY Times API
-      bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?',
-      apiKey: 'api-key=Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
+      bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/',
+      currentDate: 'current',
+      date: '',
+      apiKey: '/hardcover-fiction.json?api-key=Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
       listingURL: '',
       bestsellerList: ''
     }
@@ -43,6 +45,7 @@ class App extends Component {
     this.toBooklist = this.toBooklist.bind(this);
     this.getBestsellers = this.getBestsellers.bind(this);
     this.searchBook = this.searchBook.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   
   /*------------------
@@ -100,13 +103,21 @@ class App extends Component {
   }
 
   /*------------------
+    HANDLE CHANGE FUNCTION
+  ------------------*/
+
+  handleChange(e){
+    this.setState({ [e.target.id]: e.target.value })
+  }
+
+  /*------------------
     API FUNCTION
   ------------------*/
 
   getBestsellers(e){
     e.preventDefault();
     this.setState({
-      listingURL: this.state.bestsellerURL + this.state.apiKey,
+      listingURL: this.state.bestsellerURL + this.state.currentDate + this.state.apiKey,
     },()=>{
       fetch(this.state.listingURL)
       .then((res) => {
@@ -118,6 +129,15 @@ class App extends Component {
 
   searchBook(e){
     e.preventDefault();
+    this.setState({
+      listingURL: this.state.bestsellerURL + this.state.date + this.state.apiKey,
+    },()=>{
+      fetch(this.state.listingURL)
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => this.setState({ bestsellerList: json }))
+    })
   }
 
   /*------------------
@@ -154,7 +174,9 @@ class App extends Component {
         { this.state.navBestsellers ? <Bestseller
           getBestsellers={this.getBestsellers}
           searchBook={this.searchBook}
+          handleChange={this.handleChange}
           bestsellerList={this.state.bestsellerList}
+          date={this.state.date}
         /> : '' }
         { this.state.navBooklist ? <Booklist /> : '' }
       </div>
