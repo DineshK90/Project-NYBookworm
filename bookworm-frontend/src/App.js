@@ -29,7 +29,7 @@ class App extends Component {
       navBooklist: false,
 
       //--- NY Times API
-      baseURL: 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?',
+      bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?',
       apiKey: 'api-key=Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
       listingURL: '',
       bestsellerList: ''
@@ -41,11 +41,13 @@ class App extends Component {
     this.toRegister = this.toRegister.bind(this);
     this.toBestsellers = this.toBestsellers.bind(this);
     this.toBooklist = this.toBooklist.bind(this);
+    this.getBestsellers = this.getBestsellers.bind(this);
+    this.searchBook = this.searchBook.bind(this);
   }
   
-/*------------------
-  NAV FUNCTION
-------------------*/
+  /*------------------
+    NAV FUNCTION
+  ------------------*/
 
   toHome(){
     this.setState({
@@ -84,13 +86,6 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: true,
       navBooklist: false,
-      listingURL: this.state.baseURL + this.state.apiKey,
-    },()=>{
-      fetch(this.state.listingURL)
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => this.setState({ bestsellerList: json }))
     })
   }
 
@@ -102,6 +97,27 @@ class App extends Component {
       navBestsellers: false,
       navBooklist: true,
     })
+  }
+
+  /*------------------
+    API FUNCTION
+  ------------------*/
+
+  getBestsellers(e){
+    e.preventDefault();
+    this.setState({
+      listingURL: this.state.bestsellerURL + this.state.apiKey,
+    },()=>{
+      fetch(this.state.listingURL)
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => this.setState({ bestsellerList: json }))
+    })
+  }
+
+  searchBook(e){
+    e.preventDefault();
   }
 
   /*------------------
@@ -135,7 +151,11 @@ class App extends Component {
         { this.state.navHome ? <Home /> : '' }
         { this.state.navLogIn ? <LogIn /> : '' }
         { this.state.navRegister ? <Register /> : '' }
-        { this.state.navBestsellers ? <Bestseller bestsellerList={this.state.bestsellerList} /> : '' }
+        { this.state.navBestsellers ? <Bestseller
+          getBestsellers={this.getBestsellers}
+          searchBook={this.searchBook}
+          bestsellerList={this.state.bestsellerList}
+        /> : '' }
         { this.state.navBooklist ? <Booklist /> : '' }
       </div>
     );
