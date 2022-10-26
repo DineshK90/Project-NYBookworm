@@ -9,6 +9,8 @@ import Bestseller from './components/Bestseller';
 import Booklist from './components/Booklist';
 import LogIn from './components/LogIn';
 import Register from './components/Register';
+import NewBookForm from './components/NewBookForm';
+import EditBook from './components/EditBook';
 
 
 class App extends Component {
