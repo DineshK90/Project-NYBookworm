@@ -14,12 +14,8 @@ class Bestseller extends Component {
           <input className="mx-1" type="submit" value="Find Top 15 NY Bestsellers this week"/><br />
           <small>Powered by NYTimes Book APIs, provided from <a href="https://developer.nytimes.com/apis" target="#">https://developer.nytimes.com/apis</a></small>
         </form>
-        
-        <p>This is the changed date: {this.props.date}</p>
-
 
         { this.props.bestsellerList==='' ? '' : <h1 className="text-center">Top 15 Weekly NY Bestseller Picks Since {this.props.bestsellerList.results.bestsellers_date}</h1> }
-
         <div className="row justify-content-center text-center">
           { this.props.bestsellerList==='' ? '' : 
           this.props.bestsellerList.results.books.map((book,index)=>{
