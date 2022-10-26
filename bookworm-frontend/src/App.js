@@ -30,6 +30,8 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: false,
       navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: false,
 
       //--- User Data
       userList: [],
@@ -51,6 +53,12 @@ class App extends Component {
       bookAuthor: '',
       bookPublisher: '',
       bookSummary: '',
+
+      //--- Booklist Book Data
+      booksArray: [],
+      title: "",
+      author: "",
+      readingStatus: "",
     }
 
 
@@ -59,6 +67,8 @@ class App extends Component {
     this.toRegister = this.toRegister.bind(this);
     this.toBestsellers = this.toBestsellers.bind(this);
     this.toBooklist = this.toBooklist.bind(this);
+    this.toNewBookForm = this.toNewBookForm.bind(this);
+    this.toEditBook = this.toEditBook.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
     this.getBestsellers = this.getBestsellers.bind(this);
@@ -66,6 +76,8 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.showBookDetails = this.showBookDetails.bind(this);
     this.clearBookDetails = this.clearBookDetails.bind(this);
+    this.addBook = this.addBook.bind(this);
+    this.editBook = this.editBook.bind(this);
   }
   
   /*------------------
@@ -79,6 +91,8 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: false,
       navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: false,
     })
   }
 
@@ -89,6 +103,8 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: false,
       navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: false,
     })
   }
 
@@ -99,6 +115,8 @@ class App extends Component {
       navRegister: true,  
       navBestsellers: false,
       navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: false,
     })
   }
 
@@ -109,6 +127,8 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: true,
       navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: false,
     })
   }
 
@@ -119,6 +139,32 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: false,
       navBooklist: true,
+      navNewBookForm: false,
+      navEditBook: false,
+    })
+  }
+
+  toNewBookForm(){
+    this.setState({
+      navHome: false,
+      navLogIn: false,
+      navRegister: false,  
+      navBestsellers: false,
+      navBooklist: false,
+      navNewBookForm: true,
+      navEditBook: false,
+    })
+  }
+
+  toEditBook(){
+    this.setState({
+      navHome: false,
+      navLogIn: false,
+      navRegister: false,  
+      navBestsellers: false,
+      navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: true,
     })
   }
 
@@ -186,7 +232,6 @@ class App extends Component {
 
   handleRegister(e){
     e.preventDefault();
-    console.log(`Registered`)
     const userCredentials = {
       email: this.state.email,
       username: this.state.username,
@@ -202,6 +247,27 @@ class App extends Component {
     console.log(`Logged In`)
   } 
   
+  /*------------------
+    BOOKLIST FUNCTION
+  ------------------*/
+
+  addBook(e){
+    e.preventDefault();
+    const bookData = {
+      title: this.state.title,
+      author: this.state.author,
+      readingStatus: this.state.readingStatus,
+    }
+
+    this.state.booksArray.push(bookData);
+    console.log(this.state.booksArray);
+  }
+
+  editBook(e){
+    e.preventDefault();
+    console.log('testing from edit book form')
+  }
+
 /*------------------
   RENDERING
 ------------------*/
@@ -236,7 +302,23 @@ class App extends Component {
             bookPublisher={this.state.bookPublisher}
             bookSummary={this.state.bookSummary}
           /> : '' }
-          { this.state.navBooklist ? <Booklist /> : '' }
+
+          { this.state.navBooklist ? <Booklist
+            toNewBookForm={this.toNewBookForm}
+            toEditBook={this.toEditBook}
+            booksArray={this.state.booksArray}
+          /> : '' }
+
+          { this.state.navNewBookForm ? <NewBookForm
+            handleChange={this.handleChange}
+            addBook={this.addBook}
+          /> : '' }
+
+          { this.state.navEditBook ? <EditBook
+            handleChange={this.handleChange}
+            editBook={this.editBook}
+          /> : '' }
+
         </div>
 
         <Footer />
