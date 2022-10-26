@@ -1,63 +1,79 @@
 import React, { Component } from "react";
 
 class EditBook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // // id?
-      // title: this.props.
-    };
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-
   render() {
     return (
-      <form>
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          value={this.state.title}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="author">Author</label>
-        <input
-          type="text"
-          id="author"
-          value={this.state.author}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="yearPublished">Year Published</label>
-        <input
-          type="text"
-          id="yearPublished"
-          value={this.state.yearPublished}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="readingStatus"></label>
-        <input
-          type="text"
-          id="readingStatus"
-          value={this.state.readingStatus}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="notes"></label>
-        <input
-          type="text"
-          id="notes"
-          value={this.state.notes}
-          onChange={this.handleChange}
-        />
+      <div className="card user-card bg-light m-3">
+        <form className="card-body" onSubmit={(e) => this.props.editBook(e)}>
+          <h3 className="card-header mb-3">Editing current Book</h3>
+          <div className="form-group">
+            <label htmlFor="title">Title:</label>
+            <input
+              type="text"
+              id="title"
+              className="form-control"
+              onChange={(e) => this.props.handleChange(e)}
+              value={this.props.title}
+            />
+          </div>
 
-        <input type="submit" value="Confirm Edit" />
-      </form>
+          <div className="form-group">
+            <label htmlFor="author">Author:</label>
+            <input
+              type="text"
+              id="author"
+              className="form-control"
+              onChange={(e) => this.props.handleChange(e)}
+              value={this.props.author}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="image">Image Link:</label>
+            <input
+              type="text"
+              id="image"
+              className="form-control"
+              onChange={(e) => this.props.handleChange(e)}
+              value={this.props.image}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="publisher">Publisher:</label>
+            <input
+              type="text"
+              id="publisher"
+              className="form-control"
+              onChange={(e) => this.props.handleChange(e)}
+              value={this.props.publisher}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="readingStatus">Reading Status:</label>
+            <input
+              type="text"
+              id="readingStatus"
+              onChange={(e) => this.props.handleChange(e)}
+              className="form-control"
+              value={this.props.readingStatus}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="notes">Extra Notes:</label>
+            <input
+              type="text"
+              id="notes"
+              onChange={(e) => this.props.handleChange(e)}
+              className="form-control"
+              value={this.props.notes}
+            />
+          </div>
+          <input type="submit" className="btn btn-primary my-3" value="Edit current book" />
+        </form>
+      </div>
     );
   }
 }

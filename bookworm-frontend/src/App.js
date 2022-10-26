@@ -13,7 +13,6 @@ import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
-
 class App extends Component {
 
 /*------------------
@@ -43,22 +42,27 @@ class App extends Component {
       bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/',
       currentDate: 'current',
       date: '',
-      apiKey: '/hardcover-fiction.json?api-key=Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
+      hardcover: '/hardcover-fiction.json?api-key=',
+      apiKey: 'Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
       listingURL: '',
       bestsellerList: '',
 
       //--- NYTimes Book API Data
-      bookImage: '',
-      bookTitle: '',
-      bookAuthor: '',
-      bookPublisher: '',
-      bookSummary: '',
+      NYImage: '',
+      NYTitle: '',
+      NYAuthor: '',
+      NYPublisher: '',
+      NYSummary: '',
 
       //--- Booklist Book Data
       booksArray: [],
+      index: '',
       title: "",
       author: "",
+      image: '',
+      publisher: '',
       readingStatus: "",
+      notes: '',
     }
 
 
@@ -150,21 +154,33 @@ class App extends Component {
       navLogIn: false,
       navRegister: false,  
       navBestsellers: false,
-      navBooklist: false,
       navNewBookForm: true,
       navEditBook: false,
+      index: '',
+      title: "",
+      author: "",
+      image: '',
+      publisher: '',
+      readingStatus: "",
+      notes: '',
     })
   }
 
-  toEditBook(){
+  toEditBook(obj,index){
     this.setState({
       navHome: false,
       navLogIn: false,
       navRegister: false,  
       navBestsellers: false,
-      navBooklist: false,
       navNewBookForm: false,
       navEditBook: true,
+      index: index,
+      title: obj.title,
+      author: obj.author,
+      publisher: obj.publisher,
+      image: obj.image,
+      readingStatus: obj.readingStatus,
+      notes: obj.notes,
     })
   }
 
@@ -183,7 +199,7 @@ class App extends Component {
   getBestsellers(e){
     e.preventDefault();
     this.setState({
-      listingURL: this.state.bestsellerURL + this.state.currentDate + this.state.apiKey,
+      listingURL: this.state.bestsellerURL + this.state.currentDate + this.state.hardcover + this.state.apiKey,
     },()=>{
       fetch(this.state.listingURL)
       .then((res) => {
@@ -196,7 +212,7 @@ class App extends Component {
   searchBook(e){
     e.preventDefault();
     this.setState({
-      listingURL: this.state.bestsellerURL + this.state.date + this.state.apiKey,
+      listingURL: this.state.bestsellerURL + this.state.date + this.state.hardcover + this.state.apiKey,
     },()=>{
       fetch(this.state.listingURL)
       .then((res) => {
@@ -208,21 +224,21 @@ class App extends Component {
 
   showBookDetails(obj){
     this.setState({
-      bookImage: obj.book_image,
-      bookTitle: obj.title,
-      bookAuthor: obj.author,
-      bookPublisher: obj.publisher,
-      bookSummary: obj.description
+      NYImage: obj.book_image,
+      NYTitle: obj.title,
+      NYAuthor: obj.author,
+      NYPublisher: obj.publisher,
+      NYSummary: obj.description
     })
   }
 
   clearBookDetails(){
     this.setState({
-      bookImage: '',
-      bookTitle: '',
-      bookAuthor: '',
-      bookPublisher: '',
-      bookSummary: ''
+      NYImage: '',
+      NYTitle: '',
+      NYAuthor: '',
+      NYPublisher: '',
+      NYSummary: ''
     })
   }
 
@@ -256,16 +272,43 @@ class App extends Component {
     const bookData = {
       title: this.state.title,
       author: this.state.author,
+      image: this.state.image,
+      publisher: this.state.publisher,
       readingStatus: this.state.readingStatus,
+      notes: this.state.notes,
     }
 
     this.state.booksArray.push(bookData);
     console.log(this.state.booksArray);
+    this.setState({
+      title: '',
+      author: '',
+      image: '',
+      publisher: '',
+      readingStatus: '',
+      notes: '',
+    })
   }
 
   editBook(e){
     e.preventDefault();
-    console.log('testing from edit book form')
+    const updatedBookData = {
+      title: this.state.title,
+      author: this.state.author,
+      image: this.state.image,
+      publisher: this.state.publisher,
+      readingStatus: this.state.readingStatus,
+      notes: this.state.notes,
+    }
+    this.state.booksArray[this.state.index] = updatedBookData
+    this.setState({
+      title: this.state.title,
+      author: this.state.author,
+      image: this.state.image,
+      publisher: this.state.publisher,
+      readingStatus: this.state.readingStatus,
+      notes: this.state.notes,
+    })
   }
 
 /*------------------
@@ -296,11 +339,11 @@ class App extends Component {
             clearBookDetails={this.clearBookDetails}
             bestsellerList={this.state.bestsellerList}
             date={this.state.date}
-            bookImage={this.state.bookImage}
-            bookTitle={this.state.bookTitle}
-            bookAuthor={this.state.bookAuthor}
-            bookPublisher={this.state.bookPublisher}
-            bookSummary={this.state.bookSummary}
+            NYImage={this.state.NYImage}
+            NYTitle={this.state.NYTitle}
+            NYAuthor={this.state.NYAuthor}
+            NYPublisher={this.state.NYPublisher}
+            NYSummary={this.state.NYSummary}
           /> : '' }
 
           { this.state.navBooklist ? <Booklist
@@ -312,11 +355,23 @@ class App extends Component {
           { this.state.navNewBookForm ? <NewBookForm
             handleChange={this.handleChange}
             addBook={this.addBook}
+            title={this.state.title}
+            author={this.state.author}
+            image={this.state.image}
+            publisher={this.state.publisher}
+            readingStatus={this.state.readingStatus}
+            notes={this.state.notes}
           /> : '' }
 
           { this.state.navEditBook ? <EditBook
             handleChange={this.handleChange}
             editBook={this.editBook}
+            title={this.state.title}
+            author={this.state.author}
+            image={this.state.image}
+            publisher={this.state.publisher}
+            readingStatus={this.state.readingStatus}
+            notes={this.state.notes}
           /> : '' }
 
         </div>

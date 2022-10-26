@@ -33,15 +33,15 @@ class Bestseller extends Component {
           }
         </div>
 
-        { !this.props.bookTitle ? '' :   
+        { !this.props.NYTitle ? '' :   
           <div className="my-5 text-center">
             <h1>Book Details</h1>
-            <img src={this.props.bookImage} />
-            <h3>{this.props.bookTitle}</h3>
-            <h3>By {this.props.bookAuthor}</h3>
-            <h3>Publisher: {this.props.bookPublisher}</h3>
+            <img src={this.props.NYImage} />
+            <h3>{this.props.NYTitle}</h3>
+            <h3>By {this.props.NYAuthor}</h3>
+            <h3>Publisher: {this.props.NYPublisher}</h3>
             <h3>Summary</h3>
-            <p>{this.props.bookSummary}</p>
+            <p>{this.props.NYSummary}</p>
             <p><button className="btn btn-primary mx-2">Add</button><button className="btn btn-primary mx-2" onClick={()=>this.clearBookDetails()}>Clear</button></p>
           </div>
         }
