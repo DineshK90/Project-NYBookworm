@@ -14,7 +14,7 @@ class LogIn extends Component {
             <label htmlFor="password">Password:</label>
             <input type="password" className="form-control" id="password" placeholder="Enter Password" autoComplete="on" required/>
           </div>
-          <button type="submit" className="btn btn-primary mt-3">Submit</button>
+          <input type="submit" className="btn btn-primary mt-3" value="Log In"/>
         </form>
       </div>
     )

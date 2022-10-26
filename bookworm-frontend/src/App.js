@@ -36,7 +36,10 @@ class App extends Component {
       userList: [],
       email:  '',
       username: '',
-      password: '',      
+      password: '',
+      confirmPassword: '',
+      errorMessage: false,
+      loggedIn: false,
 
       //--- NY Times API
       bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/',
@@ -61,6 +64,7 @@ class App extends Component {
       author: "",
       image: '',
       publisher: '',
+      summary: '',
       readingStatus: "",
       notes: '',
     }
@@ -69,6 +73,7 @@ class App extends Component {
     this.toHome = this.toHome.bind(this)
     this.toLogIn = this.toLogIn.bind(this);
     this.toRegister = this.toRegister.bind(this);
+    this.displayError = this.displayError.bind(this)
     this.toBestsellers = this.toBestsellers.bind(this);
     this.toBooklist = this.toBooklist.bind(this);
     this.toNewBookForm = this.toNewBookForm.bind(this);
@@ -80,6 +85,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.showBookDetails = this.showBookDetails.bind(this);
     this.clearBookDetails = this.clearBookDetails.bind(this);
+    this.addNYToBooklist = this.addNYToBooklist.bind(this);
     this.addBook = this.addBook.bind(this);
     this.editBook = this.editBook.bind(this);
   }
@@ -232,6 +238,21 @@ class App extends Component {
     })
   }
 
+  addNYToBooklist(obj){
+    this.setState({
+      navBestsellers: false,
+      navBooklist:true,
+      navNewBookForm:true,
+      title: this.state.NYTitle,
+      author: this.state.NYAuthor,
+      image: this.state.NYImage,
+      publisher: this.state.NYPublisher,
+      summary: this.state.NYSummary,
+      readingStatus: '',
+      notes: '',
+    })
+  }
+
   clearBookDetails(){
     this.setState({
       NYImage: '',
@@ -248,6 +269,7 @@ class App extends Component {
 
   handleRegister(e){
     e.preventDefault();
+    console.log(`Registration successful!`)
     const userCredentials = {
       email: this.state.email,
       username: this.state.username,
@@ -255,6 +277,11 @@ class App extends Component {
     }
 
     this.state.userList.push(userCredentials);
+    this.setState({
+      navRegister: false,
+      navLogIn: true,
+      errorMessage: false,
+    })
     console.log(this.state.userList)
   }
 
@@ -262,6 +289,14 @@ class App extends Component {
     e.preventDefault();
     console.log(`Logged In`)
   } 
+
+  displayError(e){
+    e.preventDefault();
+    console.log('Display Error functioning correctly!')
+    this.setState({
+      errorMessage: true,
+    })
+  }
   
   /*------------------
     BOOKLIST FUNCTION
@@ -274,6 +309,7 @@ class App extends Component {
       author: this.state.author,
       image: this.state.image,
       publisher: this.state.publisher,
+      summary: this.state.summary,
       readingStatus: this.state.readingStatus,
       notes: this.state.notes,
     }
@@ -285,6 +321,7 @@ class App extends Component {
       author: '',
       image: '',
       publisher: '',
+      summary: '',
       readingStatus: '',
       notes: '',
     })
@@ -297,6 +334,7 @@ class App extends Component {
       author: this.state.author,
       image: this.state.image,
       publisher: this.state.publisher,
+      summary: this.state.summary,
       readingStatus: this.state.readingStatus,
       notes: this.state.notes,
     }
@@ -309,6 +347,7 @@ class App extends Component {
       author: this.state.author,
       image: this.state.image,
       publisher: this.state.publisher,
+      summary: this.state.summary,
       readingStatus: this.state.readingStatus,
       notes: this.state.notes,
     })
@@ -331,8 +370,20 @@ class App extends Component {
           />
 
           { this.state.navHome ? <Home /> : '' }
-          { this.state.navLogIn ? <LogIn handleChange={this.handleChange} handleLogIn={this.handleLogIn} /> : '' }
-          { this.state.navRegister ? <Register handleChange={this.handleChange} handleRegister={this.handleRegister} /> : '' }
+          { this.state.navLogIn ? <LogIn
+            handleChange={this.handleChange}
+            handleLogIn={this.handleLogIn}
+          /> : '' }
+          
+          { this.state.navRegister ? <Register
+            handleChange={this.handleChange}
+            handleRegister={this.handleRegister}
+            displayError={this.displayError}
+            password={this.state.password}
+            confirmPassword={this.state.confirmPassword}
+            errorMessage={this.state.errorMessage}
+
+          /> : '' }
 
           { this.state.navBestsellers ? <Bestseller
             getBestsellers={this.getBestsellers}
@@ -340,6 +391,7 @@ class App extends Component {
             handleChange={this.handleChange}
             showBookDetails={this.showBookDetails}
             clearBookDetails={this.clearBookDetails}
+            addNYToBooklist={this.addNYToBooklist}
             bestsellerList={this.state.bestsellerList}
             date={this.state.date}
             NYImage={this.state.NYImage}
@@ -362,6 +414,7 @@ class App extends Component {
             author={this.state.author}
             image={this.state.image}
             publisher={this.state.publisher}
+            summary={this.state.summary}
             readingStatus={this.state.readingStatus}
             notes={this.state.notes}
           /> : '' }
@@ -373,6 +426,7 @@ class App extends Component {
             author={this.state.author}
             image={this.state.image}
             publisher={this.state.publisher}
+            summary={this.state.summary}
             readingStatus={this.state.readingStatus}
             notes={this.state.notes}
           /> : '' }

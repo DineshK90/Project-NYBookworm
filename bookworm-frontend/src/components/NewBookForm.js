@@ -40,6 +40,17 @@ class NewBookForm extends Component {
           </div>
 
           <div className="form-group">
+            <label htmlFor="summary">Summary:</label>
+            <input
+              type="text"
+              id="summary"
+              className="form-control"
+              onChange={(e) => this.props.handleChange(e)}
+              value={this.props.summary}
+            />
+          </div>
+
+          <div className="form-group">
             <label htmlFor="publisher">Publisher:</label>
             <input
               type="text"

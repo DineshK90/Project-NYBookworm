@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 
 class Register extends Component {
+
   render(){
     return (
       <div className="card user-card bg-light m-3">
         <h3 className="card-header">User Registration</h3>
-        <form className="card-body" onSubmit={(e)=>this.props.handleRegister(e)}>
+        <form className="card-body" onSubmit={ (this.props.password===this.props.confirmPassword) ? (e)=>this.props.handleRegister(e) : (e)=>this.props.displayError(e) }>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input type="email" className="form-control" id="email" placeholder="Enter Email" autoComplete="on" onChange={(e)=>this.props.handleChange(e)} required />
@@ -21,9 +22,12 @@ class Register extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="password" className="form-control" id="confirmPassword" placeholder="Confirm Password" autoComplete="on" required />
+            <input type="password" className="form-control" id="confirmPassword" placeholder="Confirm Password" autoComplete="on" onChange={(e)=>this.props.handleChange(e)} required />
           </div>
-          <button type="submit" className="btn btn-primary mt-3">Submit</button>
+          <input type="submit" className="btn btn-primary mt-3" value="Register"/>
+
+          { !this.props.errorMessage ? '' : <p className="text-danger"><em>The password and confirm password do not match!</em></p> }
+
         </form>
       </div>
     )
