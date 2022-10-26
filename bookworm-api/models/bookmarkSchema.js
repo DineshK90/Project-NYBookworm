@@ -8,4 +8,5 @@ const bookmarkSchema = mongoose.Schema({
   notes: { type: String },
 });
 
-module.exports = mongoose.model("Bookmark, bookmarkSchema");
+const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
+module.exports = { Bookmark };
