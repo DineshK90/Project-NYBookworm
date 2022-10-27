@@ -33,13 +33,17 @@ class App extends Component {
       navEditBook: false,
 
       //--- User Data
+      ﻿
       userList: [],
       email:  '',
       username: '',
       password: '',
       confirmPassword: '',
       errorMessage: false,
-      loggedIn: false,
+      userAlreadyExist: false,
+      logInError: false,
+      loggedInUser: '',
+      newRegister: false,
 
       //--- NY Times API
       bestsellerURL: 'https://api.nytimes.com/svc/books/v3/lists/',
@@ -88,6 +92,7 @@ class App extends Component {
     this.addNYToBooklist = this.addNYToBooklist.bind(this);
     this.addBook = this.addBook.bind(this);
     this.editBook = this.editBook.bind(this);
+    this.toLogOut = this.toLogOut.bind(this);
   }
   
   /*------------------
@@ -110,6 +115,19 @@ class App extends Component {
     this.setState({
       navHome: false,
       navLogIn: true,
+      navRegister: false,  
+      navBestsellers: false,
+      navBooklist: false,
+      navNewBookForm: false,
+      navEditBook: false,
+    })
+  }
+
+  toLogOut(){
+    this.setState({
+      loggedInUser: '',
+      navHome: true,
+      navLogIn: false,
       navRegister: false,  
       navBestsellers: false,
       navBooklist: false,
@@ -191,6 +209,73 @@ class App extends Component {
   }
 
   /*------------------
+    USER FUNCTION
+  ------------------*/
+
+  handleRegister(e){
+    e.preventDefault();
+
+    let alreadyExist = false;
+
+    this.state.userList.map(userDetails=>{
+      if(userDetails.username===this.state.username){
+        this.setState({userAlreadyExist: true});
+        alreadyExist = true;
+      }
+    })
+
+    if(alreadyExist){
+      return;
+    }
+
+    console.log(`Registration successful!`)
+    const userCredentials = {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+    }
+
+    this.state.userList.push(userCredentials);
+    this.setState({
+      navRegister: false,
+      navLogIn: true,
+      errorMessage: false,
+      newRegister: true,
+      logInError: false,
+      userAlreadyExist: false,
+    })
+    console.log(this.state.userList)
+  }
+
+  handleLogIn(e){
+    e.preventDefault();
+
+    this.setState({logInError: true})
+
+    this.state.userList.map(userDetails=>{
+      if((userDetails.username===this.state.username)&&(userDetails.password===this.state.password)){
+        console.log('Logged In');
+        this.setState({
+          navLogIn: false,
+          navHome: true,
+          newRegister: false,
+          loggedInUser: this.state.username,
+          logInError: false,
+          userAlreadyExist: false,
+        });
+      }
+    })
+  } 
+
+  displayError(e){
+    e.preventDefault();
+    console.log('Display Error functioning correctly!')
+    this.setState({
+      errorMessage: true,
+    })
+  }
+
+  /*------------------
     HANDLE CHANGE FUNCTION
   ------------------*/
 
@@ -262,41 +347,6 @@ class App extends Component {
       NYSummary: ''
     })
   }
-
-  /*------------------
-    USER FUNCTION
-  ------------------*/
-
-  handleRegister(e){
-    e.preventDefault();
-    console.log(`Registration successful!`)
-    const userCredentials = {
-      email: this.state.email,
-      username: this.state.username,
-      password: this.state.password,
-    }
-
-    this.state.userList.push(userCredentials);
-    this.setState({
-      navRegister: false,
-      navLogIn: true,
-      errorMessage: false,
-    })
-    console.log(this.state.userList)
-  }
-
-  handleLogIn(e){
-    e.preventDefault();
-    console.log(`Logged In`)
-  } 
-
-  displayError(e){
-    e.preventDefault();
-    console.log('Display Error functioning correctly!')
-    this.setState({
-      errorMessage: true,
-    })
-  }
   
   /*------------------
     BOOKLIST FUNCTION
@@ -364,15 +414,19 @@ class App extends Component {
           <Navbar
             toHome={ this.toHome }
             toLogIn={ this.toLogIn }
+            toLogOut={ this.toLogOut }
             toRegister={ this.toRegister }
             toBestsellers={ this.toBestsellers }
             toBooklist={ this.toBooklist }
+            loggedInUser={ this.state.loggedInUser }
           />
 
           { this.state.navHome ? <Home /> : '' }
           { this.state.navLogIn ? <LogIn
             handleChange={this.handleChange}
             handleLogIn={this.handleLogIn}
+            newRegister={this.state.newRegister}
+            logInError={this.state.logInError}
           /> : '' }
           
           { this.state.navRegister ? <Register
@@ -382,6 +436,7 @@ class App extends Component {
             password={this.state.password}
             confirmPassword={this.state.confirmPassword}
             errorMessage={this.state.errorMessage}
+            userAlreadyExist={this.state.userAlreadyExist}
 
           /> : '' }
 

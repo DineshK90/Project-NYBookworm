@@ -10,7 +10,12 @@ class Navbar extends Component {
           </div>
 
           <div className="p-2 align-self-center">
-            <a className="btn btn-secondary" onClick={()=>this.props.toRegister()}>Register</a> | <a className="btn btn-secondary" onClick={()=>this.props.toLogIn()}>Log In</a>
+            { this.props.loggedInUser ? 'Logged in.' : <a className="btn btn-secondary" onClick={()=>this.props.toRegister()}>Register</a>}  |
+            
+            | { this.props.loggedInUser ? <a className="btn btn-secondary"  onClick={()=>this.props.toLogOut()}>Log Out</a> : <a className="btn btn-secondary" onClick={()=>this.props.toLogIn()}>Log In</a> }<br />
+            
+            { this.props.loggedInUser ? <p className="text-center mt-1"><strong>Welcome back, {this.props.loggedInUser}!</strong></p>:
+            <p className="text-center mt-1"><strong>Welcome, reader!</strong></p> }
           </div>
 
         </div>
