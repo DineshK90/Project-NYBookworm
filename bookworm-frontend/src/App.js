@@ -35,8 +35,9 @@ class App extends Component {
       navEditBook: false,
 
       //--- User Data
-      ﻿
+  
       userList: [],
+      _id: '',
       email:  '',
       username: '',
       password: '',
@@ -66,6 +67,7 @@ class App extends Component {
       //--- Booklist Book Data
       booksArray: [],
       index: '',
+      book_id: '',
       title: "",
       author: "",
       image: '',
@@ -204,8 +206,10 @@ class App extends Component {
       navNewBookForm: false,
       navEditBook: true,
       index: index,
+      book_id: obj._id,
       title: obj.title,
       author: obj.author,
+      summary: obj.summary,
       publisher: obj.publisher,
       image: obj.image,
       readingStatus: obj.readingStatus,
@@ -328,7 +332,7 @@ class App extends Component {
     })
   }
 
-  addNYToBooklist(obj){
+  addNYToBooklist(){
     this.setState({
       navBestsellers: false,
       navBooklist:true,
@@ -374,60 +378,103 @@ class App extends Component {
 
   addBook(e){
     e.preventDefault();
-    const bookData = {
-      title: this.state.title,
-      author: this.state.author,
-      image: this.state.image,
-      publisher: this.state.publisher,
-      summary: this.state.summary,
-      readingStatus: this.state.readingStatus,
-      notes: this.state.notes,
-    }
 
-    this.state.booksArray.push(bookData);
-    console.log(this.state.booksArray);
-    this.setState({
-      title: '',
-      author: '',
-      image: '',
-      publisher: '',
-      summary: '',
-      readingStatus: '',
-      notes: '',
+    fetch(baseURL + bookmarks, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: this.state.title,
+        author: this.state.author,
+        image: this.state.image,
+        publisher: this.state.publisher,
+        summary: this.state.summary,
+        readingStatus: this.state.readingStatus,
+        notes: this.state.notes,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res)=> res.json())
+    .then((resJson)=>{
+      const bookData = {
+        _id: resJson._id,
+        title: resJson.title,
+        author: resJson.author,
+        image: resJson.image,
+        publisher: resJson.publisher,
+        summary: resJson.summary,
+        readingStatus: resJson.readingStatus,
+        notes: resJson.notes,
+      }
+      this.state.booksArray.push(bookData);
+
+      this.setState({
+        title: '',
+        author: '',
+        image: '',
+        publisher: '',
+        summary: '',
+        readingStatus: '',
+        notes: '',
+      })
     })
   }
 
   editBook(e){
     e.preventDefault();
-    const updatedBookData = {
-      title: this.state.title,
-      author: this.state.author,
-      image: this.state.image,
-      publisher: this.state.publisher,
-      summary: this.state.summary,
-      readingStatus: this.state.readingStatus,
-      notes: this.state.notes,
-    }
-    
-    let updatedBooksArray = this.state.booksArray;
-    updatedBooksArray.splice(this.state.index,1,updatedBookData)
-    this.setState({
-      booksArray: updatedBooksArray,
-      title: this.state.title,
-      author: this.state.author,
-      image: this.state.image,
-      publisher: this.state.publisher,
-      summary: this.state.summary,
-      readingStatus: this.state.readingStatus,
-      notes: this.state.notes,
+
+    fetch(baseURL + bookmarks + '/' + this.state.book_id, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title: this.state.title,
+        author: this.state.author,
+        image: this.state.image,
+        publisher: this.state.publisher,
+        summary: this.state.summary,
+        readingStatus: this.state.readingStatus,
+        notes: this.state.notes,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res=>res.json())
+    .then(resJson=>{
+      const updatedBookData = {
+        title: resJson.title,
+        author: resJson.author,
+        image: resJson.image,
+        publisher: resJson.publisher,
+        summary: resJson.summary,
+        readingStatus: resJson.readingStatus,
+        notes: resJson.notes,
+      }
+      let updatedBooksArray = this.state.booksArray;
+      updatedBooksArray.splice(this.state.index,1,updatedBookData)
+      this.setState({
+        booksArray: updatedBooksArray,
+        title: this.state.title,
+        author: this.state.author,
+        image: this.state.image,
+        publisher: this.state.publisher,
+        summary: this.state.summary,
+        readingStatus: this.state.readingStatus,
+        notes: this.state.notes,
+      })
     })
   }
 
-  deleteBook(index){
-    let updatedBooksArray = this.state.booksArray;
-    updatedBooksArray.splice(index,1)
-    this.setState({
-      booksArray: updatedBooksArray
+  deleteBook(id){
+    fetch(baseURL + bookmarks + '/' + id, {
+      method: "DELETE",
+    })
+    .then(res=>{
+      const findIndex = this.state.booksArray.findIndex(book=>book._id===id)
+      const updatedBooksArray = [...this.state.booksArray];
+      updatedBooksArray.splice(findIndex,1)
+      this.setState({
+        booksArray: updatedBooksArray
+      })
     })
   }
 

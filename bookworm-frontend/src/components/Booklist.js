@@ -17,7 +17,7 @@ class Booklist extends Component {
                 <p>{book.title}<br /> written by {book.author}</p>
                 <p><strong>[{book.readingStatus}]</strong></p>
                 <button className="btn btn-info mx-1" onClick={()=>this.props.toEditBook(book,index)}>Edit Book</button>
-                <button className="btn btn-danger mx-1" onClick={()=>this.props.deleteBook(index)}>Delete</button>
+                <button className="btn btn-danger mx-1" onClick={()=>this.props.deleteBook(book._id)}>Delete</button>
               </div>
             )
           })
