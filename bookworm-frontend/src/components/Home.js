@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class Home extends Component {
   render(){
     return (
-      <div class="position-relative m-5">
+      <div className="position-relative m-5">
         <h2>A Message From The Creators</h2>
         <h3>Mission Statement</h3>
         <p>In a world where our daily lives is dominated by screens and  a constant information stream consisting(both good and bad), we thought of reminding everyone that there is another source of information and escapism. "A great book should leave you with many experiences, and slightly exhausted at the end. You live several lives while reading." </p>

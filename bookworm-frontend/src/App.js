@@ -37,7 +37,7 @@ class App extends Component {
       //--- User Data
   
       userList: [],
-      _id: '',
+      user_id: '',
       email:  '',
       username: '',
       password: '',
@@ -142,6 +142,8 @@ class App extends Component {
     .then((res)=>{
       this.setState({
         loggedInUser: '',
+        user_id: '',
+        booksArray: [],
         navHome: true,
         navLogIn: false,
         navRegister: false,  
@@ -179,6 +181,7 @@ class App extends Component {
   }
 
   toBooklist(){
+    this.getBooklist()
     this.setState({
       navHome: false,
       navLogIn: false,
@@ -268,6 +271,7 @@ class App extends Component {
     .then(res=>res.json())
     .then(resJson=>{
       const userCredentials = {
+        _id: resJson._id,
         email: resJson.email,
         username: resJson.username,
         password: resJson.password,
@@ -296,15 +300,20 @@ class App extends Component {
       }),
       headers: { "Content-Type":"application/json" }
     })
-    .then(res=>{
+    .then(()=>{
+
+      let findIndex = this.state.userList.findIndex(userDetails => userDetails.username===this.state.username);
+      let newUserId = this.state.userList[findIndex]._id;
+
       this.setState({
+        user_id: newUserId,
         navLogIn: false,
         navHome: true,
         newRegister: false,
         loggedInUser: this.state.username,
         logInError: false,
         userAlreadyExist: false,
-      });
+      });      
     })
     .catch((error)=> console.log(error))
 
@@ -400,9 +409,8 @@ class App extends Component {
     BOOKLIST FUNCTION
   ------------------*/
 
-
   getBooklist(){
-    fetch(baseURL + bookmarks)
+    fetch(baseURL + bookmarks + '/' + this.state.user_id)
     .then(data=> {
       return data.json()
     },err=>console.log(err.message)
@@ -417,6 +425,7 @@ class App extends Component {
     fetch(baseURL + bookmarks, {
       method: 'POST',
       body: JSON.stringify({
+        userID: this.state.user_id,
         title: this.state.title,
         author: this.state.author,
         image: this.state.image,
@@ -433,6 +442,7 @@ class App extends Component {
     .then((resJson)=>{
       const bookData = {
         _id: resJson._id,
+        userID: resJson.user_id,
         title: resJson.title,
         author: resJson.author,
         image: resJson.image,
@@ -461,6 +471,7 @@ class App extends Component {
     fetch(baseURL + bookmarks + '/' + this.state.book_id, {
       method: 'PUT',
       body: JSON.stringify({
+        userID: this.state.user_id,
         title: this.state.title,
         author: this.state.author,
         image: this.state.image,
@@ -508,7 +519,9 @@ class App extends Component {
       const updatedBooksArray = [...this.state.booksArray];
       updatedBooksArray.splice(findIndex,1)
       this.setState({
-        booksArray: updatedBooksArray
+        booksArray: updatedBooksArray,
+        navNewBookForm: false,
+        navEditBook: false,
       })
     })
   }
@@ -518,7 +531,7 @@ class App extends Component {
 ------------------*/
 
   componentDidMount(){
-    this.getBooklist();
+
     this.getUserlist();
     this.toLogOut();
   }
@@ -567,6 +580,7 @@ class App extends Component {
             showBookDetails={this.showBookDetails}
             clearBookDetails={this.clearBookDetails}
             addNYToBooklist={this.addNYToBooklist}
+            loggedInUser={this.state.loggedInUser}
             bestsellerList={this.state.bestsellerList}
             date={this.state.date}
             NYImage={this.state.NYImage}
@@ -576,10 +590,11 @@ class App extends Component {
             NYSummary={this.state.NYSummary}
           /> : '' }
 
-          { this.state.navBooklist ? <Booklist
+          { ((this.state.navBooklist) && (this.state.loggedInUser)) ? <Booklist
             toNewBookForm={this.toNewBookForm}
             toEditBook={this.toEditBook}
             deleteBook={this.deleteBook}
+            loggedInUser={this.state.loggedInUser}
             booksArray={this.state.booksArray}
           /> : '' }
 

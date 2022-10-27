@@ -42,7 +42,8 @@ class Bestseller extends Component {
             <h3>Publisher: {this.props.NYPublisher}</h3>
             <h3>Summary</h3>
             <p>{this.props.NYSummary}</p>
-            <p><button className="btn btn-primary mx-2" onClick={()=>this.props.addNYToBooklist()}>Add</button><button className="btn btn-primary mx-2" onClick={()=>this.clearBookDetails()}>Clear</button></p>
+            <p>{ this.props.loggedInUser ? <button className="btn btn-primary mx-2" onClick={()=>this.props.addNYToBooklist()}>Add</button> : ''}
+            <button className="btn btn-primary mx-2" onClick={()=>this.props.clearBookDetails()}>Clear</button></p>
           </div>
         }
       </div>

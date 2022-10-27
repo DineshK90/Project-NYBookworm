@@ -4,10 +4,8 @@ class Booklist extends Component {
   render(){
     return (
       <div>
-        <div className="text-center">
-          <button className="btn btn-primary m-5" onClick={()=>this.props.toNewBookForm()}>Add new book to library</button>
-          
-        </div>
+        
+        <h1 className="text-center my-5">{this.props.loggedInUser}'s Personal Booklist</h1>
 
         <div className="row justify-content-center">
           { this.props.booksArray.map((book,index)=>{
@@ -23,6 +21,11 @@ class Booklist extends Component {
           })
           }
         </div>
+
+        <div className="text-center">
+          <button className="btn btn-primary m-5" onClick={()=>this.props.toNewBookForm()}>Add new book to library</button>
+        </div>
+        
       </div>
     )
   }
