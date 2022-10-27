@@ -10,6 +10,7 @@ const bookmarkController = require("./controllers/bookmarkController.js");
 const userController = require("./controllers/userController.js");
 const sessionController = require("./controllers/sessionController.js")
 const checkUser = require(`./middleware/checkUser.js`)
+require('dotenv').config()
 
 /*======================
   VARIABLES
@@ -21,10 +22,8 @@ const whitelist = ["http://localhost:3000", "http://localhost:3003"];
 const corsOption = {
   origin: whitelist,
 };
-const MONGODB_URI = "mongodb+srv://admin:admin@cluster0.7lqlv8z.mongodb.net/bookworm";
 
-// mongodb://localhost:27017/bookworm
-// test first, then put 'mongodb+srv://admin:admin@cluster0.7lqlv8z.mongodb.net/bookworm'
+const MONGODB_URI = process.env.MONGO_URI;
 
 /*======================
   MIDDLE-WARE
@@ -58,7 +57,6 @@ app.use(checkUser);
 app.use("/bookmarks", bookmarkController);
 app.use("/users", userController);
 app.use('/sessions', sessionController);
-// app.use("/users", require("./routes/userRoutes"));
 
 /*======================
   TO LISTEN
