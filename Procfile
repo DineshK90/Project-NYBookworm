@@ -1,1 +1,1 @@
-web: node server.js
+web: REACT_APP_PORT=$PORT node server.js
