@@ -18,7 +18,7 @@ require('dotenv').config()
 
 const app = express();
 const PORT = process.env.PORT || 3003;
-const whitelist = ["http://localhost:3000", "http://localhost:3003",'http://localhost:' + process.env.PORT,"https://bookworm-2022-app.herokuapp.com/"];
+const whitelist = ["http://localhost:3000", "http://localhost:3003",`http://localhost:${process.env.PORT}`,"https://bookworm-2022-app.herokuapp.com/"];
 const corsOption = {
   origin: whitelist,
 };
