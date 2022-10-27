@@ -55,9 +55,9 @@ app.use(session({
 app.use(express.json());
 app.use(cors(corsOption));
 app.use(checkUser);
-app.use("/bookmarks", bookmarkController);
-app.use("/users", userController);
-app.use('/sessions', sessionController);
+app.use("/api/bookmarks", bookmarkController);
+app.use("/api/users", userController);
+app.use('/api/sessions', sessionController);
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   app.use(express.static('client/build'));
