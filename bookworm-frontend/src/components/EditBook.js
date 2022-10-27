@@ -6,7 +6,7 @@ class EditBook extends Component {
       <div className="card user-card bg-light m-3">
         <form className="card-body" onSubmit={(e) => this.props.editBook(e)}>
           <h3 className="card-header mb-3">Editing current Book</h3>
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="title">Title:</label>
             <input
               type="text"
@@ -17,7 +17,7 @@ class EditBook extends Component {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="author">Author:</label>
             <input
               type="text"
@@ -28,7 +28,7 @@ class EditBook extends Component {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="image">Image Link:</label>
             <input
               type="text"
@@ -39,7 +39,7 @@ class EditBook extends Component {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="summary">Summary:</label>
             <input
               type="text"
@@ -50,7 +50,7 @@ class EditBook extends Component {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="publisher">Publisher:</label>
             <input
               type="text"
@@ -61,7 +61,7 @@ class EditBook extends Component {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="readingStatus">Reading Status:</label>
             <input
               type="text"
@@ -72,7 +72,7 @@ class EditBook extends Component {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group my-1">
             <label htmlFor="notes">Extra Notes:</label>
             <input
               type="text"
