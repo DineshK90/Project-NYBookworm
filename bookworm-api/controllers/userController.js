@@ -7,6 +7,18 @@ const bcrypt = require("bcrypt");
 
 const users = express.Router();
 
+// curl http://localhost:3003/users
+
+users.get('/', (req,res)=>{
+  User.find({}, (err, myUser) => {
+    if (err) {
+      res.status(400).json({ err: err.message });
+    } else {
+      res.status(200).json(myUser);
+    }
+  });
+})
+
 // curl -X POST -H "Content-Type:application/json" -d '{"username":"bob","email":"111@1","password":"111"}' http://localhost:3003/users
 
 users.post(`/`, (req,res)=>{

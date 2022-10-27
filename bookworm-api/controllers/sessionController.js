@@ -13,6 +13,7 @@ sessions.post(`/`, (req,res)=>{
       if(userDetails && bcrypt.compareSync(req.body.password,userDetails.password)){
         req.session.currentUser = userDetails;
         console.log('Logged In as ' + req.body.username)
+        res.status(200).json();
       }
     }
   })
@@ -22,6 +23,7 @@ sessions.post(`/`, (req,res)=>{
 sessions.delete(`/`,(req,res)=>{
   req.session.destroy(()=>{
     console.log('Logged out')
+    res.status(200).json();
   })
 })
 

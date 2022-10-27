@@ -13,7 +13,7 @@ import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
-let baseURL = 'http://localhost:3003', bookmarks = '/bookmarks', users = '/users';
+let baseURL = 'http://localhost:3003', bookmarks = '/bookmarks', users = '/users', sessions = '/sessions';
 
 class App extends Component {
 
@@ -53,7 +53,7 @@ class App extends Component {
       currentDate: 'current',
       date: '',
       hardcover: '/hardcover-fiction.json?api-key=',
-      apiKey: process.env.REACT_APP_API_KEY || Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA,
+      apiKey: process.env.REACT_APP_API_KEY || 'Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
       listingURL: '',
       bestsellerList: '',
 
@@ -86,20 +86,24 @@ class App extends Component {
     this.toBooklist = this.toBooklist.bind(this);
     this.toNewBookForm = this.toNewBookForm.bind(this);
     this.toEditBook = this.toEditBook.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+
+    this.getUserlist = this.getUserlist.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
+
     this.getBestsellers = this.getBestsellers.bind(this);
     this.searchBook = this.searchBook.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.showBookDetails = this.showBookDetails.bind(this);
     this.clearBookDetails = this.clearBookDetails.bind(this);
     this.addNYToBooklist = this.addNYToBooklist.bind(this);
+
+    this.getBooklist = this.getBooklist.bind(this);
     this.addBook = this.addBook.bind(this);
     this.editBook = this.editBook.bind(this);
     this.deleteBook = this.deleteBook.bind(this);
     this.toLogOut = this.toLogOut.bind(this);
-
-    this.getBooklist = this.getBooklist.bind(this);
   }
   
   /*------------------
@@ -131,16 +135,23 @@ class App extends Component {
   }
 
   toLogOut(){
-    this.setState({
-      loggedInUser: '',
-      navHome: true,
-      navLogIn: false,
-      navRegister: false,  
-      navBestsellers: false,
-      navBooklist: false,
-      navNewBookForm: false,
-      navEditBook: false,
+
+    fetch(baseURL + sessions, {
+      method: "DELETE",
     })
+    .then((res)=>{
+      this.setState({
+        loggedInUser: '',
+        navHome: true,
+        navLogIn: false,
+        navRegister: false,  
+        navBestsellers: false,
+        navBooklist: false,
+        navNewBookForm: false,
+        navEditBook: false,
+      })
+    })
+
   }
 
   toRegister(){
@@ -221,6 +232,14 @@ class App extends Component {
     USER FUNCTION
   ------------------*/
 
+  getUserlist(){
+    fetch(baseURL + users)
+    .then(data=>data.json(),err=>console.log(err.message))
+    .then(parsedData=>{
+      this.setState({ userList: parsedData })
+    })
+  }
+
   handleRegister(e){
     e.preventDefault();
 
@@ -237,48 +256,68 @@ class App extends Component {
       return;
     }
 
-    console.log(`Registration successful!`)
-    const userCredentials = {
-      email: this.state.email,
-      username: this.state.username,
-      password: this.state.password,
-    }
-
-    this.state.userList.push(userCredentials);
-    this.setState({
-      navRegister: false,
-      navLogIn: true,
-      errorMessage: false,
-      newRegister: true,
-      logInError: false,
-      userAlreadyExist: false,
+    fetch(baseURL + users, {
+      method: "POST",
+      body: JSON.stringify({
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password,
+      }),
+      headers: { "Content-Type":"application/json" }
     })
-    console.log(this.state.userList)
+    .then(res=>res.json())
+    .then(resJson=>{
+      const userCredentials = {
+        email: resJson.email,
+        username: resJson.username,
+        password: resJson.password,
+      }
+    
+      this.state.userList.push(userCredentials);
+      this.setState({
+        navRegister: false,
+        navLogIn: true,
+        errorMessage: false,
+        newRegister: true,
+        logInError: false,
+        userAlreadyExist: false,
+      })
+    })
   }
 
   handleLogIn(e){
     e.preventDefault();
 
-    this.setState({logInError: true})
-
-    this.state.userList.map(userDetails=>{
-      if((userDetails.username===this.state.username)&&(userDetails.password===this.state.password)){
-        console.log('Logged In');
-        this.setState({
-          navLogIn: false,
-          navHome: true,
-          newRegister: false,
-          loggedInUser: this.state.username,
-          logInError: false,
-          userAlreadyExist: false,
-        });
-      }
+    fetch(baseURL + sessions, {
+      method: "POST",
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      }),
+      headers: { "Content-Type":"application/json" }
     })
+    .then(res=>{
+      this.setState({
+        navLogIn: false,
+        navHome: true,
+        newRegister: false,
+        loggedInUser: this.state.username,
+        logInError: false,
+        userAlreadyExist: false,
+      });
+    })
+    .catch((error)=> console.log(error))
+
+    setTimeout(()=>{
+      if(!this.state.loggedInUser){
+        this.setState({logInError: true})
+      }
+    },500)
+
   } 
 
   displayError(e){
     e.preventDefault();
-    console.log('Display Error functioning correctly!')
     this.setState({
       errorMessage: true,
     })
@@ -370,10 +409,6 @@ class App extends Component {
     )
     .then((parsedData)=>this.setState({ booksArray: parsedData}),err=>console.log(err.message)
     )
-  }
-
-  componentDidMount(){
-    this.getBooklist();
   }
 
   addBook(e){
@@ -476,6 +511,16 @@ class App extends Component {
         booksArray: updatedBooksArray
       })
     })
+  }
+
+/*------------------
+  COMPONENT MOUNT
+------------------*/
+
+  componentDidMount(){
+    this.getBooklist();
+    this.getUserlist();
+    this.toLogOut();
   }
 
 /*------------------
