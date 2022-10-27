@@ -13,7 +13,8 @@ import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
-let baseURL = `http://localhost:${process.env.REACT_APP_PORT}`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
+let app_port;
+let baseURL = 'http://localhost:' + process.env.REACT_APP_PORT, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
 
 class App extends Component {
 
