@@ -13,11 +13,11 @@ class Booklist extends Component {
           { this.props.booksArray.map((book,index)=>{
             return (
               <div key={index} className="col text-center">
-                <img src={book.image} alt={book.title} className="book_image" />
+                <img src={book.image ? book.image : 'https://i.imgur.com/kZ1mvTm.png'} alt={book.title} className="book_image" />
                 <p>{book.title}<br /> written by {book.author}</p>
                 <p><strong>[{book.readingStatus}]</strong></p>
                 <button className="btn btn-info mx-1" onClick={()=>this.props.toEditBook(book,index)}>Edit Book</button>
-                <button className="btn btn-danger mx-1" onClick={()=>this.props.toEditBook(book,index)}>Delete</button>
+                <button className="btn btn-danger mx-1" onClick={()=>this.props.deleteBook(index)}>Delete</button>
               </div>
             )
           })

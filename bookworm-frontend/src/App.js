@@ -94,6 +94,7 @@ class App extends Component {
     this.addNYToBooklist = this.addNYToBooklist.bind(this);
     this.addBook = this.addBook.bind(this);
     this.editBook = this.editBook.bind(this);
+    this.deleteBook = this.deleteBook.bind(this);
     this.toLogOut = this.toLogOut.bind(this);
 
     this.getBooklist = this.getBooklist.bind(this);
@@ -407,7 +408,7 @@ class App extends Component {
       readingStatus: this.state.readingStatus,
       notes: this.state.notes,
     }
-    // this.state.booksArray[this.state.index] = updatedBookData
+    
     let updatedBooksArray = this.state.booksArray;
     updatedBooksArray.splice(this.state.index,1,updatedBookData)
     this.setState({
@@ -419,6 +420,14 @@ class App extends Component {
       summary: this.state.summary,
       readingStatus: this.state.readingStatus,
       notes: this.state.notes,
+    })
+  }
+
+  deleteBook(index){
+    let updatedBooksArray = this.state.booksArray;
+    updatedBooksArray.splice(index,1)
+    this.setState({
+      booksArray: updatedBooksArray
     })
   }
 
@@ -478,6 +487,7 @@ class App extends Component {
           { this.state.navBooklist ? <Booklist
             toNewBookForm={this.toNewBookForm}
             toEditBook={this.toEditBook}
+            deleteBook={this.deleteBook}
             booksArray={this.state.booksArray}
           /> : '' }
 
