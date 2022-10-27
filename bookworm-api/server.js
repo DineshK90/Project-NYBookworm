@@ -17,7 +17,7 @@ require('dotenv').config()
 ======================*/
 
 const app = express();
-const PORT = 3003;
+const PORT = process.env.PORT || 3003;
 const whitelist = ["http://localhost:3000", "http://localhost:3003"];
 const corsOption = {
   origin: whitelist,
@@ -28,13 +28,6 @@ const MONGODB_URI = process.env.MONGO_URI;
 /*======================
   MIDDLE-WARE
 ======================*/
-
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
-  });
- }
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -64,6 +57,13 @@ app.use(checkUser);
 app.use("/bookmarks", bookmarkController);
 app.use("/users", userController);
 app.use('/sessions', sessionController);
+
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+  app.use(express.static('../bookworm-frontend/build'));
+  // app.get('*', (req, res) => {
+  // res.sendFile(path.join(__dirname + '../bookworm-frontend/build/index.html'));
+  // });
+ }
 
 /*======================
   TO LISTEN
