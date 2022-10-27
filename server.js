@@ -61,9 +61,9 @@ app.use('/api/sessions', sessionController);
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   app.use(express.static('client/build'));
-  // app.get('*', (req, res) => {
-  // res.sendFile(path.join(__dirname + '../bookworm-frontend/build/index.html'));
-  // });
+  app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + './client/build/index.html'));
+  });
  }
 
 /*======================
