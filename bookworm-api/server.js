@@ -46,7 +46,7 @@ mongoose.connection.on("disconnected", () => {
 
 app.use(express.json());
 app.use(cors(corsOption));
-app.use("/", bookmarkController);
+app.use("/bookmarks", bookmarkController);
 // app.use("/users", require("./routes/userRoutes"));
 
 /*======================
