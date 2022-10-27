@@ -13,7 +13,7 @@ import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
-let baseURL = 'http://localhost:3003', bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
+let baseURL = `http://localhost:${process.env.PORT || 3003}`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
 
 class App extends Component {
 
