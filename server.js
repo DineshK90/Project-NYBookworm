@@ -31,6 +31,7 @@ const MONGODB_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 mongoose.connection.once("open", () => { // Executed once we establish connection with our MongoDB
@@ -59,7 +60,7 @@ app.use("/users", userController);
 app.use('/sessions', sessionController);
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static('../bookworm-frontend/build'));
+  app.use(express.static('client/build'));
   // app.get('*', (req, res) => {
   // res.sendFile(path.join(__dirname + '../bookworm-frontend/build/index.html'));
   // });
