@@ -21,8 +21,9 @@ const whitelist = ["http://localhost:3000", "http://localhost:3003"];
 const corsOption = {
   origin: whitelist,
 };
-const MONGODB_URI = "mongodb://localhost:27017/bookworm";
+const MONGODB_URI = "mongodb+srv://admin:admin@cluster0.7lqlv8z.mongodb.net/bookworm";
 
+// mongodb://localhost:27017/bookworm
 // test first, then put 'mongodb+srv://admin:admin@cluster0.7lqlv8z.mongodb.net/bookworm'
 
 /*======================

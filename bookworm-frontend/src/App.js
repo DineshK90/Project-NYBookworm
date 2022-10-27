@@ -73,7 +73,7 @@ class App extends Component {
       image: '',
       publisher: '',
       summary: '',
-      readingStatus: "",
+      readingStatus: 'Not Started',
       notes: '',
     }
 
@@ -88,6 +88,7 @@ class App extends Component {
     this.toEditBook = this.toEditBook.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
 
     this.getUserlist = this.getUserlist.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
@@ -206,7 +207,7 @@ class App extends Component {
       author: "",
       image: '',
       publisher: '',
-      readingStatus: "",
+      readingStatus: 'Not Started',
       notes: '',
     })
   }
@@ -340,6 +341,10 @@ class App extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
+  handleChangeSelect(e){
+    this.setState({ readingStatus: e.target.value })
+  }
+
   /*------------------
     API FUNCTION
   ------------------*/
@@ -390,7 +395,7 @@ class App extends Component {
       image: this.state.NYImage,
       publisher: this.state.NYPublisher,
       summary: this.state.NYSummary,
-      readingStatus: '',
+      readingStatus: 'Not Started',
       notes: '',
     })
   }
@@ -459,7 +464,7 @@ class App extends Component {
         image: '',
         publisher: '',
         summary: '',
-        readingStatus: '',
+        readingStatus: 'Not Started',
         notes: '',
       })
     })
@@ -600,6 +605,7 @@ class App extends Component {
 
           { this.state.navNewBookForm ? <NewBookForm
             handleChange={this.handleChange}
+            handleChangeSelect={this.handleChangeSelect}
             addBook={this.addBook}
             title={this.state.title}
             author={this.state.author}
@@ -612,6 +618,7 @@ class App extends Component {
 
           { this.state.navEditBook ? <EditBook
             handleChange={this.handleChange}
+            handleChangeSelect={this.handleChangeSelect}
             editBook={this.editBook}
             title={this.state.title}
             author={this.state.author}

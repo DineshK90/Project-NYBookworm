@@ -63,13 +63,17 @@ class EditBook extends Component {
 
           <div className="form-group my-1">
             <label htmlFor="readingStatus">Reading Status:</label>
-            <input
-              type="text"
-              id="readingStatus"
-              onChange={(e) => this.props.handleChange(e)}
-              className="form-control"
+            <select
               value={this.props.readingStatus}
-            />
+              onChange={(e) => this.props.handleChangeSelect(e)}
+              className="form-select"
+            >
+              <option value="Not Started">Not Started</option>
+              <option value="In-Progress">In-Progress</option>
+              <option value="Dropped">Dropped</option>
+              <option value="Completed">Completed</option>
+
+            </select>
           </div>
 
           <div className="form-group my-1">

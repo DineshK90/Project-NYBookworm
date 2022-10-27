@@ -14,6 +14,7 @@ class NewBookForm extends Component {
               className="form-control"
               onChange={(e) => this.props.handleChange(e)}
               value={this.props.title}
+              required
             />
           </div>
 
@@ -25,6 +26,7 @@ class NewBookForm extends Component {
               className="form-control"
               onChange={(e) => this.props.handleChange(e)}
               value={this.props.author}
+              required
             />
           </div>
 
@@ -63,13 +65,17 @@ class NewBookForm extends Component {
 
           <div className="form-group">
             <label htmlFor="readingStatus">Reading Status:</label>
-            <input
-              type="text"
-              id="readingStatus"
-              onChange={(e) => this.props.handleChange(e)}
-              className="form-control"
+            <select
               value={this.props.readingStatus}
-            />
+              onChange={(e) => this.props.handleChangeSelect(e)}
+              className="form-select"
+            >
+              <option value="Not Started">Not Started</option>
+              <option value="In-Progress">In-Progress</option>
+              <option value="Dropped">Dropped</option>
+              <option value="Completed">Completed</option>
+
+            </select>
           </div>
 
           <div className="form-group">
