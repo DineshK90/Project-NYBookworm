@@ -3,10 +3,13 @@
 ======================*/
 
 const express = require("express");
+const session = require(`express-session`);
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bookmarkController = require("./controllers/bookmarkController");
-
+const bookmarkController = require("./controllers/bookmarkController.js");
+const userController = require("./controllers/userController.js");
+const sessionController = require("./controllers/sessionController.js")
+const checkUser = require(`./middleware/checkUser.js`)
 
 /*======================
   VARIABLES
@@ -43,10 +46,17 @@ mongoose.connection.on("disconnected", () => {
 });
 
 
-
+app.use(session({
+  secret:"fdaff2SDdc2f3fdfSDHNU",
+  resave: false,
+  saveUninitialized: false
+}))
 app.use(express.json());
 app.use(cors(corsOption));
+app.use(checkUser);
 app.use("/bookmarks", bookmarkController);
+app.use("/users", userController);
+app.use('/sessions', sessionController);
 // app.use("/users", require("./routes/userRoutes"));
 
 /*======================

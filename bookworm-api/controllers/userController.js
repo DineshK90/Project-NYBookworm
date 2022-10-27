@@ -1,8 +1,31 @@
 // const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
 // const asyncHandler = require("express-async-handler");
-// const User = require("../models/users");
-// const express = require("express");
+
+const express = require("express");
+const User = require("../models/userSchema");
+const bcrypt = require("bcrypt");
+
+const users = express.Router();
+
+// curl -X POST -H "Content-Type:application/json" -d '{"username":"bob","email":"111@1","password":"111"}' http://localhost:3003/users
+
+users.post(`/`, (req,res)=>{
+  
+  req.body.password = bcrypt.hashSync(
+    req.body.password,
+    bcrypt.genSaltSync(10)
+  );
+
+  User.create(req.body,(err,newUser)=>{
+    if(err){
+      res.status(400).json({ err: err.message });
+    } else {
+      res.status(200).json(newUser);
+    }
+  })
+})
+
+module.exports = users;
 
 // const registerUser = asyncHandler(async (req, res) => {
 //   const { name, email, password } = req.body;

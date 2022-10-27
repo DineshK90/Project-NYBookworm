@@ -53,7 +53,7 @@ class App extends Component {
       currentDate: 'current',
       date: '',
       hardcover: '/hardcover-fiction.json?api-key=',
-      apiKey: 'Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA',
+      apiKey: process.env.REACT_APP_API_KEY || Bnbbb1JMRcU4yMb1rxevxLLGPEsyJOjA,
       listingURL: '',
       bestsellerList: '',
 
