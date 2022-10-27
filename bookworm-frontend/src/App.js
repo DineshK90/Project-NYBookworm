@@ -13,6 +13,8 @@ import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
+let baseURL = 'http://localhost:3003', bookmarks = '/bookmarks', users = '/users';
+
 class App extends Component {
 
 /*------------------
@@ -93,6 +95,8 @@ class App extends Component {
     this.addBook = this.addBook.bind(this);
     this.editBook = this.editBook.bind(this);
     this.toLogOut = this.toLogOut.bind(this);
+
+    this.getBooklist = this.getBooklist.bind(this);
   }
   
   /*------------------
@@ -351,6 +355,21 @@ class App extends Component {
   /*------------------
     BOOKLIST FUNCTION
   ------------------*/
+
+
+  getBooklist(){
+    fetch(baseURL + bookmarks)
+    .then(data=> {
+      return data.json()
+    },err=>console.log(err.message)
+    )
+    .then((parsedData)=>this.setState({ booksArray: parsedData}),err=>console.log(err.message)
+    )
+  }
+
+  componentDidMount(){
+    this.getBooklist();
+  }
 
   addBook(e){
     e.preventDefault();
