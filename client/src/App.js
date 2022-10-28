@@ -355,7 +355,7 @@ class App extends Component {
       if(!this.state.loggedInUser){
         this.setState({logInError: true})
       }
-    },500)
+    },2000)
 
   } 
 

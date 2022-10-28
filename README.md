@@ -13,13 +13,13 @@ Use of NYT Best Seller list API to show books that are listed in their best sell
 ## Planning
 
 #### Mock up of the website
-![My Image](https://i.imgur.com/stn43ja.png)
+![Website Mock-Up](https://i.imgur.com/stn43ja.png)
 
 #### Website Navigation
-![My Image](https://i.imgur.com/nrIUKaD.png)
+![Website Navigation](https://i.imgur.com/nrIUKaD.png)
 
 #### Backend Frame
-![My Image](https://i.imgur.com/4LmBb6M.png)S
+![Backend Frame](https://i.imgur.com/4LmBb6M.png)
 
 ## Technologies Used
 - Full Stack MERN Stack(MongoDV, Express, React, Node.js)
@@ -31,6 +31,13 @@ Use of NYT Best Seller list API to show books that are listed in their best sell
 - express-session
 - mongoose
 - Bootstrap
+
+## Live Image
+
+![Live Image 1](https://i.imgur.com/Fm9VIco.png)
+![Live Image 2](https://i.imgur.com/jx33pm5.png)
+![Live Image 3](https://i.imgur.com/kpDlwzK.png)
+![Live Image 4](https://i.imgur.com/1rH5zEd.png)
 
 ## Live Link
 
