@@ -12,9 +12,9 @@ import Register from './components/Register';
 import NewBookForm from './components/NewBookForm';
 import EditBook from './components/EditBook';
 import Footer from './components/Footer';
+import BooklistDetails from './components/BooklistDetails';
 
-let app_port;
-let baseURL = baseURL = `http://localhost:/${process.env.REACT_APP_PORT}`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
+let baseURL = `https://bookworm-2022-app.herokuapp.com`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
 
 // for further testing, use " baseURL = `http://localhost:/${process.env.REACT_APP_PORT}` ""
 // for heroku deployment, use " baseURL = `https://bookworm-2022-app.herokuapp.com` " before git push heroku main
@@ -35,6 +35,7 @@ class App extends Component {
       navRegister: false,  
       navBestsellers: false,
       navBooklist: false,
+      navBooklistDetails: false,
       navNewBookForm: false,
       navEditBook: false,
 
@@ -88,6 +89,7 @@ class App extends Component {
     this.displayError = this.displayError.bind(this)
     this.toBestsellers = this.toBestsellers.bind(this);
     this.toBooklist = this.toBooklist.bind(this);
+    this.toBooklistDetails = this.toBooklistDetails.bind(this);
     this.toNewBookForm = this.toNewBookForm.bind(this);
     this.toEditBook = this.toEditBook.bind(this);
 
@@ -124,6 +126,7 @@ class App extends Component {
       navBooklist: false,
       navNewBookForm: false,
       navEditBook: false,
+      navBooklistDetails: false,
     })
   }
 
@@ -136,6 +139,7 @@ class App extends Component {
       navBooklist: false,
       navNewBookForm: false,
       navEditBook: false,
+      navBooklistDetails: false,
     })
   }
 
@@ -156,6 +160,7 @@ class App extends Component {
         navBooklist: false,
         navNewBookForm: false,
         navEditBook: false,
+        navBooklistDetails: false,
       })
     })
 
@@ -170,6 +175,7 @@ class App extends Component {
       navBooklist: false,
       navNewBookForm: false,
       navEditBook: false,
+      navBooklistDetails: false,
     })
   }
 
@@ -182,6 +188,7 @@ class App extends Component {
       navBooklist: false,
       navNewBookForm: false,
       navEditBook: false,
+      navBooklistDetails: false,
     })
   }
 
@@ -195,6 +202,26 @@ class App extends Component {
       navBooklist: true,
       navNewBookForm: false,
       navEditBook: false,
+      navBooklistDetails: false,
+    })
+  }
+
+  toBooklistDetails(obj){
+    this.setState({
+      navHome: false,
+      navLogIn: false,
+      navRegister: false,  
+      navBestsellers: false,
+      navNewBookForm: false,
+      navEditBook: false,
+      navBooklistDetails: true,
+      title: obj.title,
+      author: obj.author,
+      image: obj.image,
+      publisher: obj.publisher,
+      summary: obj.summary,
+      readingStatus: obj.readingStatus,
+      notes: obj.notes,
     })
   }
 
@@ -206,6 +233,7 @@ class App extends Component {
       navBestsellers: false,
       navNewBookForm: true,
       navEditBook: false,
+      navBooklistDetails: false,
       index: '',
       title: "",
       author: "",
@@ -224,6 +252,7 @@ class App extends Component {
       navBestsellers: false,
       navNewBookForm: false,
       navEditBook: true,
+      navBooklistDetails: false,
       index: index,
       book_id: obj._id,
       title: obj.title,
@@ -326,7 +355,7 @@ class App extends Component {
       if(!this.state.loggedInUser){
         this.setState({logInError: true})
       }
-    },500)
+    },2000)
 
   } 
 
@@ -600,11 +629,22 @@ class App extends Component {
           /> : '' }
 
           { ((this.state.navBooklist) && (this.state.loggedInUser)) ? <Booklist
+            toBooklistDetails={this.toBooklistDetails}
             toNewBookForm={this.toNewBookForm}
             toEditBook={this.toEditBook}
             deleteBook={this.deleteBook}
             loggedInUser={this.state.loggedInUser}
             booksArray={this.state.booksArray}
+          /> : '' }
+
+          { ((this.state.navBooklistDetails) && (this.state.loggedInUser)) ? <BooklistDetails
+            title={this.state.title}
+            author={this.state.author}
+            image={this.state.image}
+            publisher={this.state.publisher}
+            summary={this.state.summary}
+            readingStatus={this.state.readingStatus}
+            notes={this.state.notes}
           /> : '' }
 
           { this.state.navNewBookForm ? <NewBookForm

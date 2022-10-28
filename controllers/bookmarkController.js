@@ -1,16 +1,7 @@
 const express = require("express");
 const Bookmark = require("../models/bookmarkSchema");
-// const User = require("../models/userSchema");
 
 const bookmarks = express.Router();
-
-// const protect = require("../middleware/authMiddleware");
-
-// for test, use " curl -X POST -H "Content-Type:application/json" -d '{"name":"Deepavali"}' http://localhost:3003/bookmarks "
-
-// curl -X POST -H "Content-Type:application/json" -d '{"userID":"635a334f239c07951fee3df2","title":"Brothers of the Snake","author":"Dan Abnett"}' http://localhost:3003/bookmarks
-// curl -X DELETE http://localhost:3003/bookmarks/6359fc093773493c04f8ad49
-// curl -X PUT -H "Content-Type:application/json" -d '{"title":"Brothers of the Snake","author":"Dan Abnett","publisher":"Games Workshop","image":"https://i.imgur.com/1vSi8wA.jpg"}' http://localhost:3003/bookmarks/6359fe723bf3df39d02c562a
 
 // TO read/retrieve
 bookmarks.get("/", (req, res) => {
@@ -22,8 +13,6 @@ bookmarks.get("/", (req, res) => {
     }
   });
 });
-
-// curl http://localhost:3003/bookmarks/635a334f239c07951fee3df2
 
 // TO read/retrieve specific user's data
 bookmarks.get("/:id", (req, res) => {

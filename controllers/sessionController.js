@@ -3,8 +3,6 @@ const bcrypt = require(`bcrypt`);
 const sessions = express.Router();
 const User = require(`../models/userSchema.js`)
 
-// curl -X POST -H "Content-Type:application/json" -d '{"username":"bob","password":"111"}' http://localhost:3003/sessions
-
 sessions.post(`/`, (req,res)=>{
   User.findOne({username:req.body.username},(err,userDetails)=>{
     if(err){
@@ -18,7 +16,6 @@ sessions.post(`/`, (req,res)=>{
     }
   })
 })
-// curl -X DELETE http://localhost:3003/sessions
 
 sessions.delete(`/`,(req,res)=>{
   req.session.destroy(()=>{
