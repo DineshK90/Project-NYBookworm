@@ -14,7 +14,10 @@ import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
 let app_port;
-let baseURL = `https://bookworm-2022-app.herokuapp.com`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
+let baseURL = baseURL = `http://localhost:/${process.env.REACT_APP_PORT}`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
+
+// for further testing, use " baseURL = `http://localhost:/${process.env.REACT_APP_PORT}` ""
+// for heroku deployment, use " baseURL = `https://bookworm-2022-app.herokuapp.com` " before git push heroku main
 
 class App extends Component {
 
