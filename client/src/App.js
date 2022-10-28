@@ -14,7 +14,7 @@ import EditBook from './components/EditBook';
 import Footer from './components/Footer';
 
 let app_port;
-let baseURL = `http://localhost:${process.env.REACT_APP_PORT}`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
+let baseURL = `https://bookworm-2022-app.herokuapp.com/`, bookmarks = '/api/bookmarks', users = '/api/users', sessions = '/api/sessions';
 
 class App extends Component {
 
